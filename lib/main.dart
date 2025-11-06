@@ -28,9 +28,14 @@ Future<void> main() async {
     // Request notification permissions
     await OneSignal.Notifications.requestPermission(true);
 
-    // ✅ Print the Player ID after initialization
-    final playerId = OneSignal.User.pushSubscription.id;
-    print("🔔 OneSignal Player ID: $playerId");
+    // Wait a moment for initialization to complete
+    await Future.delayed(const Duration(seconds: 2));
+
+    // Print subscription status
+    final subscription = OneSignal.User.pushSubscription;
+    print("OneSignal Player ID: ${subscription.id}");
+    print("OneSignal Token: ${subscription.token}");
+    print("OneSignal Opt-In: ${subscription.optedIn}");
   }
 
   runApp(const MyApp());
