@@ -62,6 +62,17 @@ class SupabaseService {
     return (response as List).map((json) => DailyFact.fromJson(json)).toList();
   }
 
+  Future<List<DailyFact>> getFactsBySubjects(List<String> subjectIds) async {
+    if (subjectIds.isEmpty) return [];
+    final response = await client
+        .from('daily_facts')
+        .select()
+        .inFilter('subject_id', subjectIds)
+        .order('created_at', ascending: false)
+        .limit(100);
+    return (response as List).map((json) => DailyFact.fromJson(json)).toList();
+  }
+
   Future<void> saveOneSignalPlayerId(String userId, String playerId) async {
     await client.from('user_notifications').upsert({
       'user_id': userId,

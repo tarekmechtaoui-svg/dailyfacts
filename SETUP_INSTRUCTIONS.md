@@ -1,4 +1,23 @@
-# OneSignal Push Notifications Setup
+# Daily Facts App - Setup Guide
+
+## New Features
+
+### UI Redesign with 3 Tabs
+
+The app now features a bottom navigation bar with 3 main tabs:
+
+1. **Categories Tab** - Select which topics you want to receive daily facts about
+2. **Facts Tab** - View all facts from your selected categories
+3. **Settings Tab** - Manage notifications and account settings
+
+### Category Selection Confirmation
+
+When you select a category, a confirmation popup appears with:
+- A green checkmark icon
+- Confirmation message: "You will receive daily facts about [Category Name]"
+- Clean, modern design
+
+## OneSignal Push Notifications Setup
 
 ## Problem
 OneSignal shows `"enabled": false, "status": "NO_PERMISSION"` even after granting notification permission because Firebase Cloud Messaging (FCM) is not properly configured.

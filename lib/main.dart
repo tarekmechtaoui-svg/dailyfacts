@@ -4,7 +4,9 @@ import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'services/supabase_service.dart';
 import 'services/onesignal_service.dart';
 import 'screens/auth_screen.dart';
-import 'screens/subjects_screen.dart';
+import 'screens/categories_screen.dart';
+import 'screens/facts_screen.dart';
+import 'screens/settings_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -87,11 +89,74 @@ class _AuthWrapperState extends State<AuthWrapper> {
       return const AuthScreen();
     } else {
       _setupOneSignalUserId(user.id);
-      return const SubjectsScreen();
+      return const HomeScreen();
     }
   }
 
   void _setupOneSignalUserId(String userId) {
     OneSignalService.instance.setExternalUserId(userId);
+  }
+}
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int _selectedTabIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Daily Facts',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: Colors.blue.shade600,
+        foregroundColor: Colors.white,
+        elevation: 0,
+      ),
+      body: IndexedStack(
+        index: _selectedTabIndex,
+        children: const [
+          CategoriesScreen(),
+          FactsScreen(),
+          SettingsScreen(),
+        ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedTabIndex,
+        onTap: (index) {
+          setState(() {
+            _selectedTabIndex = index;
+          });
+        },
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Colors.white,
+        selectedItemColor: Colors.blue.shade600,
+        unselectedItemColor: Colors.grey.shade400,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.category_outlined),
+            activeIcon: Icon(Icons.category),
+            label: 'Categories',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.lightbulb_outline),
+            activeIcon: Icon(Icons.lightbulb),
+            label: 'Facts',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings_outlined),
+            activeIcon: Icon(Icons.settings),
+            label: 'Settings',
+          ),
+        ],
+      ),
+    );
   }
 }

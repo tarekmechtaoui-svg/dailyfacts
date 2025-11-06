@@ -3,14 +3,14 @@ import '../models/subject.dart';
 import '../services/supabase_service.dart';
 import '../widgets/subject_card.dart';
 
-class SubjectsScreen extends StatefulWidget {
-  const SubjectsScreen({super.key});
+class CategoriesScreen extends StatefulWidget {
+  const CategoriesScreen({super.key});
 
   @override
-  State<SubjectsScreen> createState() => _SubjectsScreenState();
+  State<CategoriesScreen> createState() => _CategoriesScreenState();
 }
 
-class _SubjectsScreenState extends State<SubjectsScreen> {
+class _CategoriesScreenState extends State<CategoriesScreen> {
   List<Subject> _subjects = [];
   Set<String> _selectedSubjectIds = {};
   bool _isLoading = true;
@@ -54,8 +54,11 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
     final user = await SupabaseService.instance.getCurrentUser();
     if (user == null) return;
 
+    final isCurrentlySelected = _selectedSubjectIds.contains(subjectId);
+    final subject = _subjects.firstWhere((s) => s.id == subjectId);
+
     try {
-      if (_selectedSubjectIds.contains(subjectId)) {
+      if (isCurrentlySelected) {
         await SupabaseService.instance
             .unsubscribeFromSubject(user.id, subjectId);
         setState(() {
@@ -66,6 +69,8 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
         setState(() {
           _selectedSubjectIds.add(subjectId);
         });
+
+        _showConfirmationPopup(subject);
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -74,35 +79,74 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
     }
   }
 
-  Future<void> _handleSignOut() async {
-    try {
-      await SupabaseService.instance.signOut();
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error signing out: $e')),
-      );
-    }
+  void _showConfirmationPopup(Subject subject) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 80,
+              height: 80,
+              decoration: BoxDecoration(
+                color: Colors.green.shade100,
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                Icons.check_circle,
+                size: 48,
+                color: Colors.green.shade600,
+              ),
+            ),
+            const SizedBox(height: 20),
+            Text(
+              'Category Added!',
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 12),
+            RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                style: Theme.of(context).textTheme.bodyMedium,
+                children: [
+                  const TextSpan(text: 'You will receive daily facts about '),
+                  TextSpan(
+                    text: subject.name,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue.shade600,
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(vertical: 12),
+              ),
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Got It'),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Choose Your Interests',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        backgroundColor: Colors.blue.shade600,
-        foregroundColor: Colors.white,
-        elevation: 0,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: _handleSignOut,
-            tooltip: 'Sign Out',
-          ),
-        ],
-      ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : _errorMessage != null
@@ -135,7 +179,7 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
                       child: Column(
                         children: [
                           const Text(
-                            'Select subjects to receive daily facts',
+                            'Select categories to receive daily facts',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 16,
