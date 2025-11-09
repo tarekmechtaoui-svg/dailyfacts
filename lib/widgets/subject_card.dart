@@ -22,26 +22,26 @@ class SubjectCard extends StatelessWidget {
         curve: Curves.easeInOut,
         decoration: BoxDecoration(
           gradient: isSelected
-              ? LinearGradient(
+              ? const LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
-                    Colors.blue.shade400,
-                    Colors.blue.shade600,
+                    Color(0xFF3B82F6),
+                    Color(0xFF1F2937),
                   ],
                 )
               : null,
-          color: isSelected ? null : Colors.white,
+          color: isSelected ? null : const Color(0xFF1F2937),
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
-            color: isSelected ? Colors.blue.shade600 : Colors.grey.shade300,
+            color: isSelected ? const Color(0xFF3B82F6) : const Color(0xFF374151),
             width: 2,
           ),
           boxShadow: [
             BoxShadow(
               color: isSelected
-                  ? Colors.blue.withOpacity(0.3)
-                  : Colors.grey.withOpacity(0.1),
+                  ? const Color(0xFF3B82F6).withOpacity(0.3)
+                  : Colors.black.withOpacity(0.2),
               blurRadius: isSelected ? 12 : 6,
               offset: const Offset(0, 4),
             ),
@@ -62,7 +62,7 @@ class SubjectCard extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: isSelected ? Colors.white : Colors.black87,
+                  color: isSelected ? Colors.white : Colors.white70,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -71,7 +71,7 @@ class SubjectCard extends StatelessWidget {
                 subject.description,
                 style: TextStyle(
                   fontSize: 12,
-                  color: isSelected ? Colors.white70 : Colors.grey.shade600,
+                  color: isSelected ? Colors.white70 : Colors.grey.shade500,
                 ),
                 textAlign: TextAlign.center,
                 maxLines: 2,

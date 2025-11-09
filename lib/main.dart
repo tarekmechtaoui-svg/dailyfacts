@@ -52,9 +52,30 @@ class MyApp extends StatelessWidget {
       title: 'Daily Subject Facts',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFF1F2937),
+          brightness: Brightness.dark,
+        ),
         useMaterial3: true,
         fontFamily: 'Roboto',
+        scaffoldBackgroundColor: const Color(0xFF0F172A),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color(0xFF1F2937),
+          foregroundColor: Colors.white,
+          elevation: 0,
+        ),
+        cardTheme: CardTheme(
+          color: const Color(0xFF1F2937),
+          elevation: 2,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
+        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+          backgroundColor: Color(0xFF1F2937),
+          selectedItemColor: Color(0xFF3B82F6),
+          unselectedItemColor: Colors.grey,
+        ),
       ),
       home: const AuthWrapper(),
     );
@@ -116,9 +137,6 @@ class _HomeScreenState extends State<HomeScreen> {
           'Daily Facts',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        backgroundColor: Colors.blue.shade600,
-        foregroundColor: Colors.white,
-        elevation: 0,
       ),
       body: IndexedStack(
         index: _selectedTabIndex,
@@ -136,9 +154,6 @@ class _HomeScreenState extends State<HomeScreen> {
           });
         },
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.white,
-        selectedItemColor: Colors.blue.shade600,
-        unselectedItemColor: Colors.grey.shade400,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.category_outlined),

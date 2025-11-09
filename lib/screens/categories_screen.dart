@@ -131,7 +131,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             width: double.infinity,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue.shade600,
+                backgroundColor: const Color(0xFF3B82F6),
                 foregroundColor: Colors.white,
                 padding: const EdgeInsets.symmetric(vertical: 12),
               ),
@@ -175,7 +175,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                     Container(
                       width: double.infinity,
                       padding: const EdgeInsets.all(24.0),
-                      color: Colors.blue.shade600,
+                      color: const Color(0xFF1F2937),
                       child: Column(
                         children: [
                           const Text(

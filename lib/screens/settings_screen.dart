@@ -122,7 +122,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           children: [
                             Icon(
                               Icons.email_outlined,
-                              color: Colors.grey.shade600,
+                              color: Colors.grey.shade500,
                             ),
                             const SizedBox(width: 16),
                             Expanded(
@@ -142,6 +142,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w500,
+                                      color: Colors.white,
                                     ),
                                   ),
                                 ],
@@ -186,7 +187,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   'Receive daily facts',
                                   style: TextStyle(
                                     fontSize: 12,
-                                    color: Colors.grey.shade600,
+                                    color: Colors.grey.shade500,
                                   ),
                                 ),
                               ],
@@ -220,7 +221,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           children: [
                             Icon(
                               Icons.info_outlined,
-                              color: Colors.grey.shade600,
+                              color: Colors.grey.shade500,
                             ),
                             const SizedBox(width: 16),
                             Column(
@@ -234,11 +235,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   ),
                                 ),
                                 const SizedBox(height: 4),
-                                Text(
+                                const Text(
                                   '1.0.0',
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w500,
+                                    color: Colors.white,
                                   ),
                                 ),
                               ],
